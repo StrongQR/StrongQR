@@ -1,158 +1,167 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>StrongQR</title>
-      <!-- Подключение библиотеки Bootstrap для стилей -->
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-      <!-- Подключение шрифта Montserrat из Google Fonts -->
-      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-      <!-- Подключение библиотеки Font Awesome для иконок -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-      <!-- Подключение Darkmode.js -->
-      <script src="https://cdn.jsdelivr.net/npm/darkmode-js"></script>
-      <style>
-        body {
-          font-family: 'Montserrat', sans-serif;
-          color: #fff; /* Цвет текста в темном режиме */
-          background-color: #222; /* Цвет фона в темном режиме */
-          transition: background-color 0.3s, color 0.3s; /* Добавил transition для плавного изменения фона и текста */
-        }
-        .container {
-          max-width: 600px;
-          margin: 0 auto;
-          padding: 20px;
-          transition: background-color 0.3s; /* Добавил transition для плавного изменения фона */
-        }
-        .card {
-          border: none;
-          border-radius: 10px;
-          box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Изменение тени в темном режиме */
-          background-color: #333; /* Цвет фона карточек в темном режиме */
-          transition: background-color 0.3s; /* Добавил transition для плавного изменения фона */
-        }
-        .card-header {
-          background-color: #4e73df;
-          color: #fff;
-          font-size: 24px;
-          font-weight: bold;
-          text-align: center;
-          padding: 20px;
-          border-top-left-radius: 10px;
-          border-top-right-radius: 10px;
-        }
-        .card-body {
-          padding: 20px;
-        }
-        .form-group {
-          margin-bottom: 20px;
-        }
-        .form-control {
-          border-radius: 5px;
-          padding: 12px 15px;
-          font-size: 16px;
-        }
-        .btn-primary {
-          background-color: #4e73df;
-          border: none;
-          padding: 12px 20px;
-          border-radius: 5px;
-          font-size: 16px;
-          font-weight: bold;
-          width: 100%;
-          transition: background-color 0.3s;
-        }
-        .btn-primary:hover {
-          background-color: #375aba;
-        }
-        #qr-code {
-          text-align: center;
-          margin-top: 20px;
-        }
-        #qr-code img {
-          max-width: 100%;
-          height: auto;
-        }
-        .privacy-policy {
-          text-align: center;
-          margin-top: 20px;
-          color: #ccc; /* Цвет текста ссылок в темном режиме */
-        }
-        .privacy-policy a {
-          color: #4e73df;
-          text-decoration: none;
-        }
-        .privacy-policy a:hover {
-          text-decoration: underline;
-        }
-        .custom-control-label::before,
-        .custom-control-label::after {
-          top: 2px;
-        }
-        .range-value {
-          color: #4e73df;
-          font-weight: bold;
-        }
-        .dark-mode {
-          background-color: #222; /* Цвет фона в темном режиме */
-          color: #fff; /* Цвет текста в темном режиме */
-        }
-      </style>
-    </head>
-    <body class="dark-mode">
-      <div class="container">
-        <div class="card">
-          <div class="card-header">
-            StrongQR
-          </div>
-          <a href="https://aaron667.github.io/StrongTOTP/" class="btn btn-primary">TOTP beta</a>
-          <div class="card-body">
-            <div class="form-group">
-              <input type="text" class="form-control" id="login-input" name="login-input" placeholder="Username">
-            </div>
-            <div class="form-group">
-              <div class="input-group">
-                <input type="password" class="form-control" id="password-input" name="password-input" placeholder="Password">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="button" id="toggle-password"><i class="far fa-eye"></i></button>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <button type="button" class="btn btn-primary" onclick="generateQRCode()">Generate QR Code</button>
-              </div>
-              <div class="form-group">
-                <button type="button" class="btn btn-dark" onclick="scanQRCode()">
-                  Scan QR Code
-                  <i class="fas fa-qrcode" style="color: white; margin-left: 5px;"></i>
-                </button>
-            </div>
-            <div class="form-group range-container">
-              <label for="password-length">Password Length:</label>
-              <input type="range" class="form-control-range" id="password-length" name="password-length" min="8" max="64" value="12">
-              <output class="range-value" id="password-length-output">12</output>
-            </div>
-            <div class="form-group">
-              <label for="password-options">Password Options:</label>
-              <select class="form-control" id="password-options" multiple>
-                <option value="include-uppercase" selected>Include uppercase letters</option>
-                <option value="include-lowercase" selected>Include lowercase letters</option>
-                <option value="include-numbers" selected>Include numbers</option>
-                <option value="include-symbols">Include special characters</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div id="qr-code"></div>
-        <div class="privacy-policy">
-        <p><a href="userguide.html">User Guide</a></p> 
-        <p><a href="privacy-policy.html">Privacy Policy</a></p>
-        </div>
-        <p style="text-align: center;">© 2024 StrongQR. All rights reserved.</p>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StrongQR</title>
+  <!-- Подключение библиотеки Bootstrap для стилей -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Подключение шрифта Montserrat из Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Подключение библиотеки Font Awesome для иконок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <!-- Подключение Darkmode.js -->
+  <script src="https://cdn.jsdelivr.net/npm/darkmode-js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P1JBCZ5WCV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-P1JBCZ5WCV');
+  </script>
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #fff; /* Цвет текста в темном режиме */
+      background-color: #222; /* Цвет фона в темном режиме */
+      transition: background-color 0.3s, color 0.3s; /* Добавил transition для плавного изменения фона и текста */
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      transition: background-color 0.3s; /* Добавил transition для плавного изменения фона */
+    }
+    .card {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Изменение тени в темном режиме */
+      background-color: #333; /* Цвет фона карточек в темном режиме */
+      transition: background-color 0.3s; /* Добавил transition для плавного изменения фона */
+    }
+    .card-header {
+      background-color: #4e73df;
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      padding: 20px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    .card-body {
+      padding: 20px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-control {
+      border-radius: 5px;
+      padding: 12px 15px;
+      font-size: 16px;
+    }
+    .btn-primary {
+      background-color: #4e73df;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      width: 100%;
+      transition: background-color 0.3s;
+    }
+    .btn-primary:hover {
+      background-color: #375aba;
+    }
+    #qr-code {
+      text-align: center;
+      margin-top: 20px;
+    }
+    #qr-code img {
+      max-width: 100%;
+      height: auto;
+    }
+    .privacy-policy {
+      text-align: center;
+      margin-top: 20px;
+      color: #ccc; /* Цвет текста ссылок в темном режиме */
+    }
+    .privacy-policy a {
+      color: #4e73df;
+      text-decoration: none;
+    }
+    .privacy-policy a:hover {
+      text-decoration: underline;
+    }
+    .custom-control-label::before,
+    .custom-control-label::after {
+      top: 2px;
+    }
+    .range-value {
+      color: #4e73df;
+      font-weight: bold;
+    }
+    .dark-mode {
+      background-color: #222; /* Цвет фона в темном режиме */
+      color: #fff; /* Цвет текста в темном режиме */
+    }
+  </style>
+</head>
+<body class="dark-mode">
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        StrongQR
       </div>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
-      <script>
+      <a href="https://aaron667.github.io/StrongTOTP/" class="btn btn-primary">TOTP beta</a>
+      <div class="card-body">
+        <div class="form-group">
+          <input type="text" class="form-control" id="login-input" name="login-input" placeholder="Username">
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <input type="password" class="form-control" id="password-input" name="password-input" placeholder="Password">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" id="toggle-password"><i class="far fa-eye"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-primary" onclick="generateQRCode()">Generate QR Code</button>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-dark" onclick="scanQRCode()">
+            Scan QR Code
+            <i class="fas fa-qrcode" style="color: white; margin-left: 5px;"></i>
+          </button>
+        </div>
+        <div class="form-group range-container">
+          <label for="password-length">Password Length:</label>
+          <input type="range" class="form-control-range" id="password-length" name="password-length" min="8" max="64" value="12">
+          <output class="range-value" id="password-length-output">12</output>
+        </div>
+        <div class="form-group">
+          <label for="password-options">Password Options:</label>
+          <select class="form-control" id="password-options" multiple>
+            <option value="include-uppercase" selected>Include uppercase letters</option>
+            <option value="include-lowercase" selected>Include lowercase letters</option>
+            <option value="include-numbers" selected>Include numbers</option>
+            <option value="include-symbols">Include special characters</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="qr-code"></div>
+    <div class="privacy-policy">
+      <p><a href="userguide.html">User Guide</a></p> 
+      <p><a href="privacy-policy.html">Privacy Policy</a></p>
+    </div>
+    <p style="text-align: center;">© 2024 StrongQR. All rights reserved.</p>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <script>
     function generateQRCode() {
       var login = document.getElementById('login-input').value.trim();
       var password = document.getElementById('password-input').value.trim();
@@ -236,9 +245,9 @@
       document.getElementById('password-length-output').innerHTML = length;
     }
 
-        function scanQRCode() {
-          window.location.href = "scanqrx.html";
-        }
+    function scanQRCode() {
+      window.location.href = "scanqrx.html";
+    }
   </script>
 </body>
 </html>
